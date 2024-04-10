@@ -10,17 +10,16 @@ public class Polynomial {
 	 * Constructs a Polynomial with no terms yet.
 	 */
 	public Polynomial() {
-		//FIXME
+		this.list = new LinkedList<>();
 	}
 
-	
 	/**
 	 * 
 	 * @param coeff
 	 * @return polynomial with added term
 	 */
 	public void addTerm(double coeff) {
-		//FIXME
+		list.add(coeff);
 	}
 	
 	/*
@@ -29,7 +28,20 @@ public class Polynomial {
 	 * Cx^N + Cx^N-1 + ... + Cx + C
 	 */
 	public String toString() {
-		return ""; //FIXME
+		String polynomial = "";
+		int power = list.size();
+		for(int i = 1; i <= power; i++) {
+			if(power - i == 1) {
+				polynomial += list.get(i-1) + "x + "; 
+			}
+			else if(power - i == 0) {
+				polynomial += list.get(i-1); 
+			}
+			else {
+				polynomial += list.get(i-1) + "x^" + (power - i) + " + "; 
+			}
+		}
+		return polynomial;
 	}
 	
 	/**
@@ -38,14 +50,22 @@ public class Polynomial {
 	 * @return value of polynomial at that x
 	 */
 	public double evaluate(double x) {
-		return 0;//FIXME
+		double value = 0;
+		int power = list.size();
+		for (int i = 1; i <= power; i++) {
+			value += list.get(i-1) * Math.pow(x, power - i);
+		}
+		return value;
 	}
 
-	
 	public Polynomial derivative() {
-		return null;//FIXME
+		Polynomial polynomialDeriv = new Polynomial();
+		int power = list.size();
+		for (int i = 1; i < power; i++) {
+			polynomialDeriv.addTerm(list.get(i-1) * (power - i));
+		}
+		return polynomialDeriv;
 	}
-	
 
 	/**
 	 * This is the "equals" method that is called by
